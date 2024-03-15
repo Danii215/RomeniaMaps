@@ -3,6 +3,7 @@ from typing import Dict, List
 class Cidade:
     nome: str
     vizinhas: Dict[str, int]
+    # Atributo estático
     cidades_total: Dict[str, 'Cidade'] = {}
 
     def __init__(self, nome: str) -> None:
@@ -20,7 +21,7 @@ class Cidade:
         vizinhos_total_quantidade: int       = len(vizinhos_total)
         print (f"{vizinho.nome} possui {vizinhos_total_quantidade} vizinhos: {vizinhos_total}")
 
-        for cidade_vizinha in list(vizinho.vizinhas.keys()):
+        for cidade_vizinha in vizinhos_total:
             # print(Cidade.get_cidade_by_nome(cidade_vizinha))
             cidade_from_nome: 'Cidade' = Cidade.get_cidade_by_nome(cidade_vizinha)
             print(cidade_vizinha)
@@ -28,7 +29,7 @@ class Cidade:
 
     @staticmethod
     def get_cidade_by_nome(nome: str) -> 'Cidade':
-        return Cidade.cidades_total.get(nome)
+        return Cidade.cidades_total.get(nome.lower().capitalize())
 
     @staticmethod
     def definir_vizinhos(vizinhoA: 'Cidade', vizinhoB: 'Cidade', distancia: int) -> None:
@@ -81,5 +82,6 @@ Cidade.definir_vizinhos(vaslui, iasi, 92)
 Cidade.definir_vizinhos(iasi, neamt, 87)
 
 print(oradea)
+print(Cidade.get_cidade_by_nome("HIRSOVA"))
 
 Cidade.get_vizinhos_from_vizinho(oradea)
