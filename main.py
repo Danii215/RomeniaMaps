@@ -6,36 +6,42 @@ class Cidade:
     # Atributo estático
     cidades_total: Dict[str, 'Cidade'] = {}
 
+    #Construtor
     def __init__(self, nome: str) -> None:
         self.nome = nome
         self.vizinhas = {}
         Cidade.cidades_total[nome] = self
 
+    #Retorno da cidade e seus vizinhos
     def __str__(self) -> str:
         vizinhas_str = ', '.join(f"{cidade.nome if isinstance(cidade, Cidade) else cidade} ({distancia} km)" for cidade, distancia in self.vizinhas.items())
         return f"A cidade {self.nome} possui essas vizinhas: {vizinhas_str}"
+    
+    #Cadastro dos Vizinhos
+    @staticmethod
+    def definir_vizinhos(vizinhoA: 'Cidade', vizinhoB: 'Cidade', distancia: int) -> None:
+        vizinhoA.vizinhas[vizinhoB.nome] = distancia
+        vizinhoB.vizinhas[vizinhoA.nome] = distancia
 
+    #Retorna nome no tipo Cidade
+    @staticmethod
+    def get_cidade_by_nome(nome: str) -> 'Cidade':
+        return Cidade.cidades_total.get(nome.lower().capitalize())
+
+    #Método principal
     @staticmethod
     def get_vizinhos_from_vizinho(vizinho: 'Cidade'):
         vizinhos_total:            List[str] = list(vizinho.vizinhas.keys())
         vizinhos_total_quantidade: int       = len(vizinhos_total)
         print (f"{vizinho.nome} possui {vizinhos_total_quantidade} vizinhos: {vizinhos_total}")
-
         for cidade_vizinha in vizinhos_total:
             # print(Cidade.get_cidade_by_nome(cidade_vizinha))
             cidade_from_nome: 'Cidade' = Cidade.get_cidade_by_nome(cidade_vizinha)
             print(cidade_vizinha)
             # Cidade.get_vizinhos_from_vizinho(cidade_from_nome)
 
-    @staticmethod
-    def get_cidade_by_nome(nome: str) -> 'Cidade':
-        return Cidade.cidades_total.get(nome.lower().capitalize())
 
-    @staticmethod
-    def definir_vizinhos(vizinhoA: 'Cidade', vizinhoB: 'Cidade', distancia: int) -> None:
-        vizinhoA.vizinhas[vizinhoB.nome] = distancia
-        vizinhoB.vizinhas[vizinhoA.nome] = distancia
-
+#Define as variáveis do tipo Cidade para cada cidade
 oradea         = Cidade("Oradea")
 zerind         = Cidade("Zerind")
 arad           = Cidade("Arad")
@@ -57,6 +63,7 @@ vaslui         = Cidade("Vaslui")
 iasi           = Cidade("Iasi")
 neamt          = Cidade("Neamt")
 
+#Define os vizinhos das Cidades
 Cidade.definir_vizinhos(oradea, zerind, 71)
 Cidade.definir_vizinhos(oradea, sibiu, 151)
 Cidade.definir_vizinhos(zerind, arad, 75)
@@ -81,7 +88,10 @@ Cidade.definir_vizinhos(hirsova, eforie, 86)
 Cidade.definir_vizinhos(vaslui, iasi, 92)
 Cidade.definir_vizinhos(iasi, neamt, 87)
 
-print(oradea)
-print(Cidade.get_cidade_by_nome("HIRSOVA"))
+nome_da_cidade_inicial: str = input("Insira a cidade inicial: ")
+cidade_inicial: 'Cidade' = Cidade.get_cidade_by_nome(nome_da_cidade_inicial)
 
-Cidade.get_vizinhos_from_vizinho(oradea)
+nome_da_cidade_final: str = input("Insira a cidade final: ")
+cidade_final: 'Cidade' =  Cidade.get_cidade_by_nome(nome_da_cidade_final)
+
+#Proximo passo -> Trabalhar com o "for" do "get_vizinhos_from_vizinho"
