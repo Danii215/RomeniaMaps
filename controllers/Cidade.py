@@ -1,6 +1,14 @@
 from typing import Dict, List
 
 class Cidade:
+    """
+    A classe Cidade representa de forma abstrata, uma
+    instância de um ponto no mapa, com nome, cidades 
+    vizinhas, e as distâncias até elas.
+
+    De forma estática, também armazena todas as cidades no projeto.
+    """
+
     nome: str
     vizinhas: Dict[str, int]
     # Atributo estático
@@ -29,6 +37,18 @@ class Cidade:
 
         vizinhas_str = ', '.join(f"{cidade.nome if isinstance(cidade, Cidade) else cidade} ({distancia} km)" for cidade, distancia in self.vizinhas.items())
         return f"A cidade {self.nome} possui essas vizinhas: {vizinhas_str}"
+
+    def distancia_de_vizinho(self, qual_vizinho: str) -> int:
+        """
+        Traz a distância de uma cidade até um vizinho especificado.
+
+        :param qual_vizinho: Qual o nome do vizinho da cidade que deseja-se obter a 
+        distância pra chegar até lá.
+        :type qual_vizinho: str
+        :return: int
+        """
+
+        return self.vizinhas[qual_vizinho]
     
     @staticmethod
     def definir_vizinhos(vizinhoA: 'Cidade', vizinhoB: 'Cidade', distancia: int) -> None:
@@ -53,13 +73,14 @@ class Cidade:
         """
         O método estático get_cidade_by_nome retorna um objeto do tipo
         Cidade a partir de uma string passada como parâmetro, qualquer
-        que corresponder essa string ao nome da Cidade.
+        que corresponder essa string ao nome da Cidade. Capitaliza os nomes
+        automaticamente.
 
         :param nome: O nome da cidade a ser retornada.
         :type nome: str
         :return: Cidade
         """
-        return Cidade.cidades_total.get(nome.lower().capitalize())
+        return Cidade.cidades_total[nome.lower().title()]
 
     @staticmethod
     def get_vizinhos_from_cidade(cidade: 'Cidade') -> List[str]:
@@ -72,8 +93,6 @@ class Cidade:
         :type cidade: Cidade
         :return: List[str]
         """
-        vizinhos_total:            List[str] = list(cidade.vizinhas.keys())
-        vizinhos_total_quantidade: int       = len(vizinhos_total)
-        # print (f"{cidade.nome} possui {vizinhos_total_quantidade} vizinhos: {vizinhos_total}")
+        vizinhos_total: List[str] = list(cidade.vizinhas.keys())
 
         return vizinhos_total

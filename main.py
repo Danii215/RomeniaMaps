@@ -1,7 +1,7 @@
-from typing import Dict, List
+from typing import List
 from controllers.Cidade import Cidade
+from controllers.Rota import Rota
 
-#Define as variáveis do tipo Cidade para cada cidade
 oradea         = Cidade("Oradea")
 zerind         = Cidade("Zerind")
 arad           = Cidade("Arad")
@@ -23,7 +23,6 @@ vaslui         = Cidade("Vaslui")
 iasi           = Cidade("Iasi")
 neamt          = Cidade("Neamt")
 
-#Define os vizinhos das Cidades
 Cidade.definir_vizinhos(oradea, zerind, 71)
 Cidade.definir_vizinhos(oradea, sibiu, 151)
 Cidade.definir_vizinhos(zerind, arad, 75)
@@ -48,38 +47,35 @@ Cidade.definir_vizinhos(hirsova, eforie, 86)
 Cidade.definir_vizinhos(vaslui, iasi, 92)
 Cidade.definir_vizinhos(iasi, neamt, 87)
 
-nome_da_cidade_inicial: str = input("Insira a cidade inicial: ")
+
+nome_da_cidade_inicial: str = input("Insira a cidade inicial: ").lower().capitalize()
 cidade_inicial: 'Cidade' = Cidade.get_cidade_by_nome(nome_da_cidade_inicial)
 
-nome_da_cidade_final: str = input("Insira a cidade final: ")
+nome_da_cidade_final: str = input("Insira a cidade final: ").lower().capitalize()
 cidade_final: 'Cidade' =  Cidade.get_cidade_by_nome(nome_da_cidade_final)
 
-#Proximo passo -> Trabalhar com o "for" do "get_vizinhos_from_vizinho"
+rota: 'Rota' = Rota(nome_da_cidade_final)
 
-rota: List[str] = []
+def criar_rota(qual_cidade: 'Cidade'):
+    if rota.incluir_cidade_no_caminho(qual_cidade):
+        if rota.chegou_no_final(): return
 
-def iterar_vizinhos(qual_cidade: 'Cidade'):
-    if nome_da_cidade_final.lower().capitalize() in rota: return 
-    if qual_cidade is None: return
-    
-    rota.append(qual_cidade.nome)
+        vizinhos: List[str] = Cidade.get_vizinhos_from_cidade(qual_cidade)
 
-    vizinhos: List[str] = Cidade.get_vizinhos_from_cidade(qual_cidade)
-    for vizinho in vizinhos:
-        if nome_da_cidade_final.lower().capitalize() in rota: return 
-        
-        if vizinho in rota: 
-            continue
+        for vizinho in vizinhos:
+            if rota.chegou_no_final(): break
+            if rota.verifica_se_esta_no_caminho(vizinho): continue
 
-        if vizinho != nome_da_cidade_final.lower().capitalize():
-            iterar_vizinhos(Cidade.get_cidade_by_nome(vizinho))
-        else: break
-    
-    if nome_da_cidade_final.lower().capitalize() not in rota: 
-        print("sucesso parabenms")
-        rota.append(nome_da_cidade_final.lower().capitalize())
-    return
+            distancia_ate_o_vizinho: int = qual_cidade.distancia_de_vizinho(vizinho)
+            rota.somar_distancia_percorrida(distancia_ate_o_vizinho)
+            criar_rota(Cidade.get_cidade_by_nome(vizinho))
 
-iterar_vizinhos(cidade_inicial)
+        if not rota.chegou_no_final():
+            nome_da_penultima_cidade: str = rota.nome_da_penultima_cidade_no_caminho()
+            distancia_a_subtrair: int = qual_cidade.distancia_de_vizinho(nome_da_penultima_cidade)
+            rota.tirar_cidade_do_caminho(qual_cidade.nome)
+            rota.subtrair_distancia_percorrida(distancia_a_subtrair)
+
+criar_rota(cidade_inicial)
 
 print(rota)
