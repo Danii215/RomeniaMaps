@@ -1,45 +1,5 @@
 from typing import Dict, List
-
-class Cidade:
-    nome: str
-    vizinhas: Dict[str, int]
-    # Atributo estático
-    cidades_total: Dict[str, 'Cidade'] = {}
-
-    #Construtor
-    def __init__(self, nome: str) -> None:
-        self.nome = nome
-        self.vizinhas = {}
-        Cidade.cidades_total[nome] = self
-
-    #Retorno da cidade e seus vizinhos
-    def __str__(self) -> str:
-        vizinhas_str = ', '.join(f"{cidade.nome if isinstance(cidade, Cidade) else cidade} ({distancia} km)" for cidade, distancia in self.vizinhas.items())
-        return f"A cidade {self.nome} possui essas vizinhas: {vizinhas_str}"
-    
-    #Cadastro dos Vizinhos
-    @staticmethod
-    def definir_vizinhos(vizinhoA: 'Cidade', vizinhoB: 'Cidade', distancia: int) -> None:
-        vizinhoA.vizinhas[vizinhoB.nome] = distancia
-        vizinhoB.vizinhas[vizinhoA.nome] = distancia
-
-    #Retorna nome no tipo Cidade
-    @staticmethod
-    def get_cidade_by_nome(nome: str) -> 'Cidade':
-        return Cidade.cidades_total.get(nome.lower().capitalize())
-
-    #Método principal
-    @staticmethod
-    def get_vizinhos_from_vizinho(vizinho: 'Cidade'):
-        vizinhos_total:            List[str] = list(vizinho.vizinhas.keys())
-        vizinhos_total_quantidade: int       = len(vizinhos_total)
-        print (f"{vizinho.nome} possui {vizinhos_total_quantidade} vizinhos: {vizinhos_total}")
-        for cidade_vizinha in vizinhos_total:
-            # print(Cidade.get_cidade_by_nome(cidade_vizinha))
-            cidade_from_nome: 'Cidade' = Cidade.get_cidade_by_nome(cidade_vizinha)
-            print(cidade_vizinha)
-            # Cidade.get_vizinhos_from_vizinho(cidade_from_nome)
-
+from controllers.Cidade import Cidade
 
 #Define as variáveis do tipo Cidade para cada cidade
 oradea         = Cidade("Oradea")
@@ -95,3 +55,31 @@ nome_da_cidade_final: str = input("Insira a cidade final: ")
 cidade_final: 'Cidade' =  Cidade.get_cidade_by_nome(nome_da_cidade_final)
 
 #Proximo passo -> Trabalhar com o "for" do "get_vizinhos_from_vizinho"
+
+rota: List[str] = []
+
+def iterar_vizinhos(qual_cidade: 'Cidade'):
+    if nome_da_cidade_final.lower().capitalize() in rota: return 
+    if qual_cidade is None: return
+    
+    rota.append(qual_cidade.nome)
+
+    vizinhos: List[str] = Cidade.get_vizinhos_from_cidade(qual_cidade)
+    for vizinho in vizinhos:
+        if nome_da_cidade_final.lower().capitalize() in rota: return 
+        
+        if vizinho in rota: 
+            continue
+
+        if vizinho != nome_da_cidade_final.lower().capitalize():
+            iterar_vizinhos(Cidade.get_cidade_by_nome(vizinho))
+        else: break
+    
+    if nome_da_cidade_final.lower().capitalize() not in rota: 
+        print("sucesso parabenms")
+        rota.append(nome_da_cidade_final.lower().capitalize())
+    return
+
+iterar_vizinhos(cidade_inicial)
+
+print(rota)
