@@ -69,9 +69,9 @@ class Cidade:
         vizinhoB.vizinhas[vizinhoA.nome] = distancia
 
     @staticmethod
-    def get_cidade_by_nome(nome: str) -> 'Cidade':
+    def pegar_cidade_pelo_nome(nome: str) -> 'Cidade':
         """
-        O método estático get_cidade_by_nome retorna um objeto do tipo
+        O método estático pegar_cidade_pelo_nome retorna um objeto do tipo
         Cidade a partir de uma string passada como parâmetro, qualquer
         que corresponder essa string ao nome da Cidade. Capitaliza os nomes
         automaticamente.
@@ -83,9 +83,9 @@ class Cidade:
         return Cidade.cidades_total[nome.lower().title()]
 
     @staticmethod
-    def get_vizinhos_from_cidade(cidade: 'Cidade') -> List[str]:
+    def pegar_vizinhos_da_cidade(cidade: 'Cidade') -> List[str]:
         """
-        O método get_vizinhos_from_cidade retorna uma lista de strings
+        O método pegar_vizinhos_da_cidade retorna uma lista de strings
         que correspondem ao nome das cidades que são vizinhas à cidade
         passada como parâmetro.
 

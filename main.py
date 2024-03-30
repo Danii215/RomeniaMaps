@@ -47,35 +47,40 @@ Cidade.definir_vizinhos(hirsova, eforie, 86)
 Cidade.definir_vizinhos(vaslui, iasi, 92)
 Cidade.definir_vizinhos(iasi, neamt, 87)
 
-
 nome_da_cidade_inicial: str = input("Insira a cidade inicial: ").lower().capitalize()
-cidade_inicial: 'Cidade' = Cidade.get_cidade_by_nome(nome_da_cidade_inicial)
+cidade_inicial: 'Cidade' = Cidade.pegar_cidade_pelo_nome(nome_da_cidade_inicial)
 
 nome_da_cidade_final: str = input("Insira a cidade final: ").lower().capitalize()
-cidade_final: 'Cidade' =  Cidade.get_cidade_by_nome(nome_da_cidade_final)
+cidade_final: 'Cidade' =  Cidade.pegar_cidade_pelo_nome(nome_da_cidade_final)
 
-rota: 'Rota' = Rota(nome_da_cidade_final)
+lista_de_rotas: List['Rota'] = []
 
-def criar_rota(qual_cidade: 'Cidade'):
-    if rota.incluir_cidade_no_caminho(qual_cidade):
-        if rota.chegou_no_final(): return
+def criar_rota():
+    nova_rota: 'Rota' = Rota(nome_da_cidade_final)
 
-        vizinhos: List[str] = Cidade.get_vizinhos_from_cidade(qual_cidade)
+    rota = caminhar(nova_rota, cidade_inicial)
 
-        for vizinho in vizinhos:
-            if rota.chegou_no_final(): break
-            if rota.verifica_se_esta_no_caminho(vizinho): continue
+    lista_de_rotas.append(rota)
 
-            distancia_ate_o_vizinho: int = qual_cidade.distancia_de_vizinho(vizinho)
-            rota.somar_distancia_percorrida(distancia_ate_o_vizinho)
-            criar_rota(Cidade.get_cidade_by_nome(vizinho))
+def caminhar(qual_rota: 'Rota', qual_cidade: 'Cidade') -> 'Rota':
+    qual_rota.incluir_cidade_no_caminho(qual_cidade)
 
-        if not rota.chegou_no_final():
-            nome_da_penultima_cidade: str = rota.nome_da_penultima_cidade_no_caminho()
-            distancia_a_subtrair: int = qual_cidade.distancia_de_vizinho(nome_da_penultima_cidade)
-            rota.tirar_cidade_do_caminho(qual_cidade.nome)
-            rota.subtrair_distancia_percorrida(distancia_a_subtrair)
+    possiveis_caminhos: List[str] = Cidade.pegar_vizinhos_da_cidade(qual_cidade)
 
-criar_rota(cidade_inicial)
+    for caminho_escolhido in possiveis_caminhos:
+        if qual_rota.chegou_no_final(): break
+        if qual_rota.verifica_se_esta_no_caminho(caminho_escolhido): continue
 
-print(rota)
+        qual_rota.aplicar_distancia(qual_cidade, caminho_escolhido)
+
+        proxima_cidade: 'Cidade' = Cidade.pegar_cidade_pelo_nome(caminho_escolhido)
+
+        caminhar(qual_rota, proxima_cidade)
+
+    if not qual_rota.chegou_no_final(): qual_rota.tirar_cidade_do_caminho_da_rota(qual_cidade)
+    
+    return qual_rota
+
+criar_rota()
+
+print(lista_de_rotas[0])

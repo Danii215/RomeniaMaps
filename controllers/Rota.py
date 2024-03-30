@@ -56,34 +56,34 @@ class Rota:
         self.caminho.append(qual_cidade.nome)
         return True
 
-    def tirar_cidade_do_caminho(self, qual_nome_da_cidade: str) -> bool:
+    def tirar_cidade_do_caminho_da_rota(self, qual_cidade: 'Cidade') -> None:
         """
-        Verifica se a cidade passada como parâmetro está no caminho e
-        a retira, caso esteja.
+        Retira a distância percorrida de um caminho tomado e retira o nome
+        da cidade passada da lista de caminhos desta rota.
 
-        Retorna True se retirado, False se não aconteceu.
-
-        :param qual_nome_da_cidade: O nome da cidade que deve ser retirada
-        do caminho.
-        :type qual_nome_da_cidade: str
-        :return: bool
-        """
-
-        if qual_nome_da_cidade in self.caminho:
-            self.caminho.remove(qual_nome_da_cidade)
-            return True
-        
-        return False
-
-    def somar_distancia_percorrida(self, unidades_percorridas: int) -> None:
-        """
-        Adiciona à distância percorrida da Rota o tanto especificado.
-
-        :param unidades_percorridas: O quanto deve ser adicionado.
-        :type unidades_percorridas: int
+        :param qual_cidade: Qual a cidade que será removida do caminho da rota.
+        :type qual_cidade: Cidade
         :return: None
         """
 
+        nome_da_penultima_cidade_no_caminho: str = self._nome_da_penultima_cidade_no_caminho()
+        distancia_a_subtrair: int = qual_cidade.distancia_de_vizinho(nome_da_penultima_cidade_no_caminho)
+        self.subtrair_distancia_percorrida(distancia_a_subtrair)
+        self._tirar_nome_da_cidade_do_caminho(qual_cidade)
+
+    def aplicar_distancia(self, de_qual_cidade: 'Cidade', ate_qual_cidade: str) -> None:
+        """
+        Calcula uma distância de uma cidade até a outra e aplica na distância
+        percorrida total da rota.
+
+        :param de_qual_cidade: Cidade inicial, que começará o cálculo.
+        :type de_qual_cidade: Cidade
+        :param ate_qual_cidade: O nome da cidade final, ponto de chegada.
+        :type ate_qual_cidade: str
+        :return: None
+        """
+
+        unidades_percorridas: int = de_qual_cidade.distancia_de_vizinho(ate_qual_cidade)
         self.distancia_percorrida += unidades_percorridas
 
     def subtrair_distancia_percorrida(self, unidades_percorridas: int) -> None:
@@ -139,7 +139,8 @@ class Rota:
         if len(self.caminho) > 1: return False
         return True
     
-    def nome_da_penultima_cidade_no_caminho(self) -> str:
+    # Método privado
+    def _nome_da_penultima_cidade_no_caminho(self) -> str:
         """
         Traz o nome da penúltima cidade listada no caminho da Rota.
 
@@ -147,6 +148,26 @@ class Rota:
         """
 
         return self.caminho[-2]
+    
+    # Método privado
+    def _tirar_nome_da_cidade_do_caminho(qual_rota: 'Rota', qual_cidade: 'Cidade') -> bool:
+        """
+        Verifica se o nome da cidade se encontra armazenado no caminho. Se sim, o remove de lá.
+
+        Retorna True tendo remoção sucedida, ou False se nada ocorreu.
+
+        :param qual_rota: A rota que deve-se avaliar o caminho.
+        :type qual_rota: Rota
+        :param qual_cidade: A cidade que deve-se retirar do caminho, existindo nele.
+        :type qual_cidade: Cidade
+        :return: bool
+        """
+
+        if qual_cidade.nome in qual_rota.caminho:
+            qual_rota.caminho.remove(qual_cidade.nome)
+            return True
+        
+        return False
     
     def quantas_cidades_passamos(self) -> int:
         """
