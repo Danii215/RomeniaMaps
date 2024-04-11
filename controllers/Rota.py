@@ -1,5 +1,6 @@
 from typing import List
 from controllers.Cidade import Cidade
+from controllers.Debug import Debug
 
 class Rota:
     """
@@ -31,7 +32,7 @@ class Rota:
         :return: str
         """
 
-        rota_str = f"Essa rota fez o caminho {self.caminho} percorrendo um total de {self.distancia_percorrida}"
+        rota_str = f"Essa rota fez o caminho {self.caminho} percorrendo um total de {self.distancia_percorrida} unidades de distância."
         return rota_str
     
     def incluir_cidade_no_caminho(self, qual_cidade: 'Cidade') -> bool:
@@ -54,6 +55,7 @@ class Rota:
         if qual_cidade.nome in self.caminho: return False
 
         self.caminho.append(qual_cidade.nome)
+        Debug.log("Inserida a cidade " + qual_cidade.nome + " no caminho da rota atual com sucesso.")
         return True
 
     def tirar_cidade_do_caminho_da_rota(self, qual_cidade: 'Cidade') -> None:
@@ -70,6 +72,7 @@ class Rota:
         distancia_a_subtrair: int = qual_cidade.distancia_de_vizinho(nome_da_penultima_cidade_no_caminho)
         self.subtrair_distancia_percorrida(distancia_a_subtrair)
         self._tirar_nome_da_cidade_do_caminho(qual_cidade)
+        Debug.log("Retirada a cidade " + qual_cidade.nome + " do caminho da rota atual com sucesso.")
 
     def aplicar_distancia(self, de_qual_cidade: 'Cidade', ate_qual_cidade: str) -> None:
         """
