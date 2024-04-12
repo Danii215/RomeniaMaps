@@ -1,6 +1,6 @@
 from typing import List
-from controllers.Cidade import Cidade
-from controllers.Debug import Debug
+from Controllers.Cidade import Cidade
+from Controllers.Debug import Debug
 
 class Rota:
     """
@@ -8,11 +8,16 @@ class Rota:
     de todas as cidades que foram percorridas do ponto
     inicial até o final, além de toda a distância
     percorrida até chegar lá.
+
+    De forma estática, armazena todas as rotas geradas
+    até o momento de execução da aplicação.
     """
 
     nome_da_cidade_final: str
     caminho: List[str] = []
     distancia_percorrida: int = 0
+    # Atributo estático
+    lista_de_rotas: List['Rota'] = []
 
     def __init__(self, nome_da_cidade_final: str) -> None:
         """
@@ -34,6 +39,55 @@ class Rota:
 
         rota_str = f"Essa rota fez o caminho {self.caminho} percorrendo um total de {self.distancia_percorrida} unidades de distância."
         return rota_str
+    
+    @staticmethod
+    def criar_rota(cidade_inicial: 'Cidade', nome_da_cidade_final: str):
+        """
+        O método criar_rota inicia o processo de geração de uma rota de
+        uma cidade inicial, até outra cidade final.
+
+        O motivo para a cidade inicial ser uma instância de objeto Cidade,
+        enquanto que a cidade final é apenas o nome, é pra evitar a
+        necessidade de acessar o nome da cidade final cada vez que verifica
+        se o objetivo foi alcançado.
+        """
+        Debug.log("Criando nova rota...")
+        nova_rota: 'Rota' = Rota(nome_da_cidade_final)
+
+        rota = Rota.caminhar(nova_rota, cidade_inicial)
+
+        Debug.log("Rota criada com sucesso: " + str(rota))
+        Rota.lista_de_rotas.append(rota)
+
+    @staticmethod
+    def caminhar(qual_rota: 'Rota', qual_cidade: 'Cidade') -> 'Rota':
+        """
+        :TODO: Documentar este método e reduzir sua lógica em mais métodos.
+        """
+        qual_rota.incluir_cidade_no_caminho(qual_cidade)
+
+        possiveis_caminhos: List[str] = Cidade.pegar_vizinhos_da_cidade(qual_cidade)
+
+        quantidade_de_possibilidades: int
+        if len(qual_rota.caminho) == 1: quantidade_de_possibilidades = len(possiveis_caminhos)
+        else: quantidade_de_possibilidades = len(possiveis_caminhos) - 1
+
+        for caminho_escolhido in possiveis_caminhos:
+            if qual_rota.chegou_no_final(): return qual_rota
+            if qual_rota.verifica_se_esta_no_caminho(caminho_escolhido): continue
+
+            Debug.log(f"atualmente estou em {qual_cidade.nome}.")
+            Debug.log(f"de {possiveis_caminhos} eu escolhi {caminho_escolhido}, que é a opção {possiveis_caminhos.index(caminho_escolhido)} de {quantidade_de_possibilidades} opções")
+
+            qual_rota.aplicar_distancia(qual_cidade, caminho_escolhido)
+
+            proxima_cidade: 'Cidade' = Cidade.pegar_cidade_pelo_nome(caminho_escolhido)
+
+            Rota.caminhar(qual_rota, proxima_cidade)
+
+        if not qual_rota.chegou_no_final(): qual_rota.tirar_cidade_do_caminho_da_rota(qual_cidade)
+        
+        return qual_rota
     
     def incluir_cidade_no_caminho(self, qual_cidade: 'Cidade') -> bool:
         """
