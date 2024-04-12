@@ -1,5 +1,4 @@
 import json
-from typing import Dict, List
 from Controllers.Cidade import Cidade
 
 class Mapa:
@@ -15,9 +14,9 @@ class Mapa:
     """
 
     caminho_pro_json: str = "Assets/mapa_padrao.json"
-    lista_de_nomes_de_cidades: List[str]
-    cidades_em_dicionario: Dict[str, object]
-    todas_as_cidades: Dict[str, 'Cidade'] = {}
+    lista_de_nomes_de_cidades: list[str]
+    cidades_em_dicionario: dict[str, object]
+    todas_as_cidades: dict[str, 'Cidade'] = {}
 
     def __init__(self, caminho_pro_json: str = "") -> None:
         """
@@ -66,7 +65,7 @@ class Mapa:
                 Cidade.definir_vizinhos(cidade_avaliada, cidade_vizinha, distancia_ate_vizinha)
 
     @staticmethod
-    def pegar_nomes_de_todas_as_cidades_do_json(caminho_pro_json: str) -> List[str]:
+    def pegar_nomes_de_todas_as_cidades_do_json(caminho_pro_json: str) -> list[str]:
         """
         Lê um arquivo JSON, analisa seu conteúdo em um dicionário Python e retorna uma lista de 
         strings consistindo das primeiras chaves imediatas do objeto JSON analisado.
@@ -80,14 +79,14 @@ class Mapa:
         :type caminho_pro_json: str
         :return: List[str]
         """
-        arquivo_legivel: Dict[str, any] = Mapa.converter_json_em_dicionario(caminho_pro_json)
+        arquivo_legivel: dict[str, any] = Mapa.converter_json_em_dicionario(caminho_pro_json)
         
-        lista_de_cidades: List[str] = list(arquivo_legivel.keys())
+        lista_de_cidades: list[str] = list(arquivo_legivel.keys())
         
         return lista_de_cidades
 
     @staticmethod
-    def converter_json_em_dicionario(caminho_pro_json: str) -> Dict[str, any]:
+    def converter_json_em_dicionario(caminho_pro_json: str) -> dict[str, any]:
         """
         Lê um arquivo JSON e o transforma em texto. Em seguida, converte novamente para um dicionário
         Python, à fim de ser usado em lógicas internas relacionadas à classe Mapa.
@@ -101,7 +100,7 @@ class Mapa:
         json_em_texto: str = Mapa.converter_json_em_texto(caminho_pro_json)
         
         try:
-            arquivo_legivel: Dict[str] = json.loads(json_em_texto)
+            arquivo_legivel: dict[str] = json.loads(json_em_texto)
 
         except json.JSONDecodeError as erro_de_decodificacao:
             raise ValueError("Conteúdo de JSON inválido.") from erro_de_decodificacao

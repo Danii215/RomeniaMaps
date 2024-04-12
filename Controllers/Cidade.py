@@ -1,5 +1,3 @@
-from typing import Dict, List
-
 class Cidade:
     """
     A classe Cidade representa de forma abstrata, uma
@@ -10,9 +8,9 @@ class Cidade:
     """
 
     nome: str
-    vizinhas: Dict[str, int]
+    vizinhas: dict[str, int]
     # Atributo estático
-    cidades_total: Dict[str, 'Cidade'] = {}
+    cidades_total: dict[str, 'Cidade'] = {}
 
     def __init__(self, nome: str) -> None:
         """
@@ -83,7 +81,7 @@ class Cidade:
         return Cidade.cidades_total[nome.lower().title()]
 
     @staticmethod
-    def pegar_vizinhos_da_cidade(cidade: 'Cidade') -> List[str]:
+    def pegar_vizinhos_da_cidade(cidade: 'Cidade') -> list[str]:
         """
         O método pegar_vizinhos_da_cidade retorna uma lista de strings
         que correspondem ao nome das cidades que são vizinhas à cidade
@@ -93,6 +91,6 @@ class Cidade:
         :type cidade: Cidade
         :return: List[str]
         """
-        vizinhos_total: List[str] = list(cidade.vizinhas.keys())
+        vizinhos_total: list[str] = list(cidade.vizinhas.keys())
 
         return vizinhos_total

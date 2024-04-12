@@ -1,6 +1,5 @@
-from typing import List
 from Controllers.Cidade import Cidade
-from Controllers.Debug import Debug
+from Utilities.Debug import Debug
 
 class Rota:
     """
@@ -14,10 +13,10 @@ class Rota:
     """
 
     nome_da_cidade_final: str
-    caminho: List[str] = []
+    caminho: list[str] = []
     distancia_percorrida: int = 0
     # Atributo estático
-    lista_de_rotas: List['Rota'] = []
+    lista_de_rotas: list['Rota'] = []
 
     def __init__(self, nome_da_cidade_final: str) -> None:
         """
@@ -66,7 +65,7 @@ class Rota:
         """
         qual_rota.incluir_cidade_no_caminho(qual_cidade)
 
-        possiveis_caminhos: List[str] = Cidade.pegar_vizinhos_da_cidade(qual_cidade)
+        possiveis_caminhos: list[str] = Cidade.pegar_vizinhos_da_cidade(qual_cidade)
 
         quantidade_de_possibilidades: int
         if len(qual_rota.caminho) == 1: quantidade_de_possibilidades = len(possiveis_caminhos)
