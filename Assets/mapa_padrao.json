@@ -1,88 +1,208 @@
 {
     "Oradea": {
-        "Zerind": 71,
-        "Sibiu": 151
+        "Vizinhos": {
+            "Zerind": 71,
+            "Sibiu": 151
+        },
+        "Coordenada": {
+            "x": -0.07,
+            "y": 7.96
+        }
     },
     "Zerind": {
-        "Oradea": 71,
-        "Arad": 75
+        "Vizinhos": {
+            "Oradea": 71,
+            "Arad": 75
+        },
+        "Coordenada": {
+            "x": -0.75,
+            "y": 6.72
+        }
     },
     "Arad": {
-        "Zerind": 75,
-        "Sibiu": 140,
-        "Timisoara": 118
+        "Vizinhos": {
+            "Zerind": 75,
+            "Sibiu": 140,
+            "Timisoara": 118
+        },
+        "Coordenada": {
+            "x": -1.17,
+            "y": 5.3
+        }
     },
     "Timisoara": {
-        "Arad": 118,
-        "Lugoj": 111
+        "Vizinhos": {
+            "Arad": 118,
+            "Lugoj": 111
+        },
+        "Coordenada": {
+            "x": -1.03,
+            "y": 3.16
+        }
     },
     "Lugoj": {
-        "Timisoara": 111,
-        "Mehadia": 70
+        "Vizinhos": {
+            "Timisoara": 111,
+            "Mehadia": 70
+        },
+        "Coordenada": {
+            "x": 1.15,
+            "y": 2.48
+        }
     },
     "Mehadia": {
-        "Lugoj": 70,
-        "Dobreta": 75
+        "Vizinhos": {
+            "Lugoj": 70,
+            "Dobreta": 75
+        },
+        "Coordenada": {
+            "x": 1.21,
+            "y": 1.4
+        }
     },
     "Dobreta": {
-        "Mehadia": 75,
-        "Craiova": 120
+        "Vizinhos": {
+            "Mehadia": 75,
+            "Craiova": 120
+        },
+        "Coordenada": {
+            "x": 1.17,
+            "y": 0.36
+        }
     },
     "Craiova": {
-        "Dobreta": 120,
-        "Rimnicu Vilcea": 146,
-        "Pitesti": 138
+        "Vizinhos": {
+            "Dobreta": 120,
+            "Rimnicu Vilcea": 146,
+            "Pitesti": 138
+        },
+        "Coordenada": {
+            "x": 3.27,
+            "y": 0
+        }
     },
     "Rimnicu Vilcea": {
-        "Craiova": 146,
-        "Sibiu": 80,
-        "Pitesti": 97
+        "Vizinhos": {
+            "Craiova": 146,
+            "Sibiu": 80,
+            "Pitesti": 97
+        },
+        "Coordenada": {
+            "x": 2.97,
+            "y": 3.3
+        }
     },
     "Pitesti": {
-        "Rimnicu Vilcea": 97,
-        "Craiova": 138,
-        "Bucharest": 101
+        "Vizinhos": {
+            "Rimnicu Vilcea": 97,
+            "Craiova": 138,
+            "Bucharest": 101
+        },
+        "Coordenada": {
+            "x": 5.45,
+            "y": 2.4
+        }
     },
     "Sibiu": {
-        "Arad": 140,
-        "Oradea": 151,
-        "Rimnicu Vilcea": 80,
-        "Fagaras": 99
+        "Vizinhos": {
+            "Arad": 140,
+            "Oradea": 151,
+            "Rimnicu Vilcea": 80,
+            "Fagaras": 99
+        },
+        "Coordenada": {
+            "x": 2.35,
+            "y": 4.66
+        }
     },
     "Fagaras": {
-        "Sibiu": 99,
-        "Bucharest": 211
+        "Vizinhos": {
+            "Sibiu": 99,
+            "Bucharest": 211
+        },
+        "Coordenada": {
+            "x": 4.99,
+            "y": 4.54
+        }
     },
     "Bucharest": {
-        "Fagaras": 211,
-        "Pitesti": 101,
-        "Giurgiu": 90,
-        "Urziceni": 85
+        "Vizinhos": {
+            "Fagaras": 211,
+            "Pitesti": 101,
+            "Giurgiu": 90,
+            "Urziceni": 85
+        },
+        "Coordenada": {
+            "x": 7.63,
+            "y": 1.68
+        }
     },
     "Giurgiu": {
-        "Bucharest": 90
+        "Vizinhos": {
+            "Bucharest": 90
+        },
+        "Coordenada": {
+            "x": 6.79,
+            "y": -0.02
+        }
     },
     "Urziceni": {
-        "Bucharest": 85,
-        "Hirsova": 98,
-        "Vaslui": 142
+        "Vizinhos": {
+            "Bucharest": 85,
+            "Hirsova": 98,
+            "Vaslui": 142
+        },
+        "Coordenada": {
+            "x": 9.25,
+            "y": 2.24
+        }
     },
     "Hirsova": {
-        "Urziceni": 98,
-        "Eforie": 86
+        "Vizinhos": {
+            "Urziceni": 98,
+            "Eforie": 86
+        },
+        "Coordenada": {
+            "x": 11.2,
+            "y": 2.28
+        }
     },
     "Eforie": {
-        "Hirsova": 86
+        "Vizinhos": {
+            "Hirsova": 86
+        },
+        "Coordenada": {
+            "x": 11.71,
+            "y": 0.92
+        }
     },
     "Vaslui": {
-        "Urziceni": 142,
-        "Iasi": 92
+        "Vizinhos": {
+            "Urziceni": 142,
+            "Iasi": 92
+        },
+        "Coordenada": {
+            "x": 10.57,
+            "y": 5.02
+        }
     },
     "Iasi": {
-        "Vaslui": 92,
-        "Neamt": 87
+        "Vizinhos": {
+            "Vaslui": 92,
+            "Neamt": 87
+        },
+        "Coordenada": {
+            "x": 9.52,
+            "y": 6.58
+        }
     },
     "Neamt": {
-        "Iasi": 87
+        "Vizinhos": {
+            "Iasi": 87
+        },
+        "Coordenada": {
+            "x": 7.89,
+            "y": 7.18
+        }
     }
 }

@@ -2,95 +2,133 @@ class Cidade:
     """
     A classe Cidade representa de forma abstrata, uma
     instância de um ponto no mapa, com nome, cidades 
-    vizinhas, e as distâncias até elas.
-
-    De forma estática, também armazena todas as cidades no projeto.
+    vizinhas, e as distâncias até elas. Armazena também
+    as coordenadas dessa Cidade, pra melhor visualização
+    em um gráfico, caso esse dado seja fornecido 
+    corretamente.
     """
 
     nome: str
     vizinhas: dict[str, int]
-    # Atributo estático
-    cidades_total: dict[str, 'Cidade'] = {}
+    coordenadas: dict[str, float]
 
     def __init__(self, nome: str) -> None:
         """
         Construtor da classe Cidade.
-        
-        :param nome: O parâmetro "nome" no construtor define uma string que serve
-        de nome para a instância de Cidade que está sendo instanciada.
-        :type nome: str
-        :return: None
-        """
 
-        self.nome = nome
+        Este método inicializa uma instância da classe Cidade com o nome fornecido, com a primeira letra de cada palavra 
+        em maiúscula e as demais em minúscula.
+
+        Parâmetros
+        ----------
+        nome : str
+            O nome da cidade que será atribuído à instância de Cidade.
+
+        Retorna
+        -------
+        None
+            Este método não retorna nada.
+        """
+        self.nome = nome.title()
         self.vizinhas = {}
-        Cidade.cidades_total[nome] = self
 
     def __str__(self) -> str:
         """
-        Versão em string de uma instância de Cidade.
-        
-        :return: str
-        """
+        Retorna uma representação em string da instância de Cidade.
 
+        Esta representação inclui o nome da cidade e uma lista de suas cidades vizinhas, 
+        com as respectivas distâncias em quilômetros.
+
+        Retorna
+        -------
+        str
+            Uma representação em string da instância de Cidade.
+        """
         vizinhas_str = ', '.join(f"{cidade.nome if isinstance(cidade, Cidade) else cidade} ({distancia} km)" for cidade, distancia in self.vizinhas.items())
         return f"A cidade {self.nome} possui essas vizinhas: {vizinhas_str}"
 
     def distancia_de_vizinho(self, qual_vizinho: str) -> int:
         """
-        Traz a distância de uma cidade até um vizinho especificado.
+        Retorna a distância de uma cidade até um vizinho especificado.
 
-        :param qual_vizinho: Qual o nome do vizinho da cidade que deseja-se obter a 
-        distância pra chegar até lá.
-        :type qual_vizinho: str
-        :return: int
+        Este método retorna a distância em quilômetros de uma cidade até um vizinho especificado.
+
+        Parâmetros
+        ----------
+        qual_vizinho : str
+            O nome do vizinho da cidade para o qual deseja-se obter a distância.
+
+        Retorna
+        -------
+        int
+            A distância em quilômetros da cidade até o vizinho especificado.
         """
-
         return self.vizinhas[qual_vizinho]
     
     @staticmethod
     def definir_vizinhos(vizinhoA: 'Cidade', vizinhoB: 'Cidade', distancia: int) -> None:
         """
-        O método estático definir_vizinhos aplica vizinhança
-        pra cada uma das cidades passadas como parâmetros.
+        Estabelece a relação de vizinhança entre duas cidades.
 
-        :param vizinhoA: Uma das cidades que será estabelecida a relação de vizinhança.
-        :type vizinhoA: Cidade
-        :param vizinhoB: A segunda cidade que será estabelecida a relação de vizinhança.
-        :type vizinhoB: Cidade
-        :param distancia: A distância entre as duas cidades (sem unidade).
-        :type distancia: int
-        :return: None
+        Este método estático estabelece a relação de vizinhança entre duas cidades, adicionando 
+        cada uma à lista de vizinhos da outra com a distância especificada.
+
+        Parâmetros
+        ----------
+        vizinhoA : Cidade
+            Uma das cidades que terá a relação de vizinhança estabelecida.
+        vizinhoB : Cidade
+            A segunda cidade que terá a relação de vizinhança estabelecida.
+        distancia : int
+            A distância em quilômetros entre as duas cidades.
+
+        Retorna
+        -------
+        None
+            Este método não retorna nada.
         """
-
         vizinhoA.vizinhas[vizinhoB.nome] = distancia
         vizinhoB.vizinhas[vizinhoA.nome] = distancia
 
     @staticmethod
-    def pegar_cidade_pelo_nome(nome: str) -> 'Cidade':
+    def definir_coordenadas(qual_cidade: 'Cidade', coordenadas: dict[str, float]) -> None:
         """
-        O método estático pegar_cidade_pelo_nome retorna um objeto do tipo
-        Cidade a partir de uma string passada como parâmetro, qualquer
-        que corresponder essa string ao nome da Cidade. Capitaliza os nomes
-        automaticamente.
+        Aplica coordenadas à cidade especificada.
 
-        :param nome: O nome da cidade a ser retornada.
-        :type nome: str
-        :return: Cidade
+        Este método estático define as coordenadas em formato de ponto flutuante para a cidade 
+        especificada.
+
+        Parâmetros
+        ----------
+        qual_cidade : Cidade
+            A cidade à qual serão atribuídas as coordenadas.
+        coordenadas : dict[str, float]
+            Um dicionário contendo as coordenadas x e y, representadas por valores de ponto flutuante.
+
+        Retorna
+        -------
+        None
+            Este método não retorna nada.
         """
-        return Cidade.cidades_total[nome.lower().title()]
+        qual_cidade.coordenadas = coordenadas
 
     @staticmethod
-    def pegar_vizinhos_da_cidade(cidade: 'Cidade') -> list[str]:
+    def pegar_vizinhos_da_cidade(qual_cidade: 'Cidade') -> list[str]:
         """
-        O método pegar_vizinhos_da_cidade retorna uma lista de strings
-        que correspondem ao nome das cidades que são vizinhas à cidade
-        passada como parâmetro.
+        Retorna uma lista de nomes das cidades vizinhas à cidade especificada.
 
-        :param cidade: Qual cidade queremos encontrar os vizinhos.
-        :type cidade: Cidade
-        :return: List[str]
+        Este método estático retorna uma lista de strings que correspondem aos nomes das cidades 
+        que são vizinhas à cidade passada como parâmetro.
+
+        Parâmetros
+        ----------
+        qual_cidade : Cidade
+            A cidade da qual desejamos obter os vizinhos.
+
+        Retorna
+        -------
+        list[str]
+            Uma lista de nomes das cidades vizinhas à cidade especificada.
         """
-        vizinhos_total: list[str] = list(cidade.vizinhas.keys())
-
+        vizinhos_total: list[str] = list(qual_cidade.vizinhas.keys())
         return vizinhos_total
