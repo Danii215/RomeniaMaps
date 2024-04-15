@@ -3,6 +3,29 @@ import networkx as nx
 from Controllers.Mapa import Mapa
 
 class Grafo:
+    """
+    A classe Grafo representa a estrutura de dados gráfica que contém as informações sobre as conexões entre
+    as cidades e suas representações visuais.
+
+    Atributos Públicos
+    ------------------
+    mapa : 'Mapa'
+        O mapa associado ao grafo, contendo as informações sobre as cidades e suas conexões.
+    representacao : 'nx.Graph'
+        A representação gráfica do grafo, utilizando a biblioteca NetworkX.
+    atributos_do_desenho : dict[str, any]
+        Um dicionário contendo os atributos de desenho do grafo, como cor, tamanho e largura das arestas,
+        bem como a posição dos nós no espaço gráfico. Por padrão, inclui os seguintes atributos:
+        - 'pos': Um dicionário vazio, que será preenchido posteriormente com as coordenadas das cidades.
+        - 'node_color': Cor dos nós, padrão 'skyblue'.
+        - 'node_size': Tamanho dos nós, padrão 500.
+        - 'edge_color': Cores das arestas, inicialmente uma lista vazia.
+        - 'width': Largura das arestas, padrão 3.
+        - 'with_labels': Define se as etiquetas (nomes das cidades) devem ser exibidas nos nós, padrão True.
+        - 'font_color': Cor das etiquetas, padrão 'black'.
+        - 'font_size': Tamanho da fonte das etiquetas, padrão 5.
+
+    """
     mapa: 'Mapa'
     representacao: 'nx.Graph'
     atributos_do_desenho: dict[str, any] = {
@@ -215,17 +238,17 @@ class Grafo:
         """
         plt.show()
 
-    def exibir_grafo_em_png(self) -> None:
+    def exibir_grafo_em_png(self, nome_do_arquivo: str) -> None:
         """
         Gera uma imagem PNG do grafo renderizado pelo objeto Mapa.
 
         Esta função gera uma imagem PNG do grafo renderizado pelo objeto Mapa
         usando a biblioteca Matplotlib. A imagem é salva no diretório Assets com
-        o nome "grafo_resultado.png" e uma resolução de 300 DPI.
+        o nome passado e uma resolução de 300 DPI.
 
         Retorna
         -------
         None
             Esta função não retorna nada.
         """
-        plt.savefig("Assets/grafo_resultado.png", dpi=300)
+        plt.savefig(f"Assets/{nome_do_arquivo}.png", dpi=300)

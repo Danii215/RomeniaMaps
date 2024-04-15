@@ -1,20 +1,24 @@
 from Controllers.Mapa import Mapa
 from Controllers.Rota import Rota
 from Controllers.Grafo import Grafo
-from Views.HomeView import HomeView
-#Terminar de implementar a classe HomeView e trazer os inputs para o main, gerando a rota
+from Views.HomeView import Home
 
 def main():
-    HomeView()
     mapa: 'Mapa' = Mapa()
 
-    nome_da_cidade_inicial: str = input("Insira a cidade inicial: ")
-    nome_da_cidade_final: str = input("Insira a cidade final: ")
+    grafo_inicial: 'Grafo' = Grafo(mapa)
+    grafo_inicial.exibir_grafo_em_png("grafo_inicial")
+
+    home: 'Home' = Home()
+
+    nome_da_cidade_inicial: str = home.nome_da_cidade_inicial
+    nome_da_cidade_final: str = home.nome_da_cidade_final
 
     rota: 'Rota' = Rota(mapa, nome_da_cidade_inicial, nome_da_cidade_final)
 
     grafo: 'Grafo' = Grafo(mapa, rota.caminho)
-    grafo.exibir_grafo_em_png()
+    grafo.exibir_grafo_em_png("grafo_finalizado")
+    grafo.exibir_grafo_em_janela()
 
 if __name__ == "__main__":
     main()

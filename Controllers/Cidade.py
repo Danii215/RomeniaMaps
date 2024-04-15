@@ -1,13 +1,19 @@
 class Cidade:
     """
-    A classe Cidade representa de forma abstrata, uma
-    instância de um ponto no mapa, com nome, cidades 
-    vizinhas, e as distâncias até elas. Armazena também
-    as coordenadas dessa Cidade, pra melhor visualização
-    em um gráfico, caso esse dado seja fornecido 
-    corretamente.
-    """
+    A classe Cidade representa de forma abstrata um ponto no mapa, incluindo informações como nome, cidades vizinhas
+    e as distâncias até elas. Também armazena as coordenadas da cidade para melhor visualização em um gráfico, se
+    esses dados estiverem disponíveis.
 
+    Atributos Públicos
+    ------------------
+    nome : str
+        O nome da cidade.
+    vizinhas : dict[str, int]
+        Um dicionário que mapeia o nome das cidades vizinhas para as distâncias até elas.
+    coordenadas : dict[str, float]
+        Um dicionário contendo as coordenadas da cidade no mapa, representadas por valores de ponto flutuante,
+        onde 'x' representa a coordenada no eixo X e 'y' representa a coordenada no eixo Y.
+    """
     nome: str
     vizinhas: dict[str, int]
     coordenadas: dict[str, float]

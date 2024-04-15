@@ -3,12 +3,20 @@ from Controllers.Cidade import Cidade
 
 class Mapa:
     """
-    A classe Mapa é a estrutura de dados que abstrai as conexões entre
-    cidades, bem como suas cidades vizinhas, e as distâncias entre elas.
-    É a classe responsável em organizar o nome de cada cidade e suas
-    relações entre si.
-    """
+    A classe Mapa é a estrutura de dados que abstrai as conexões entre cidades, bem como suas cidades vizinhas,
+    e as distâncias entre elas. É a classe responsável por organizar o nome de cada cidade e suas relações entre si.
 
+    Atributos Públicos
+    ------------------
+    caminho_pro_json : str
+        O caminho para o arquivo JSON que contém as informações sobre as conexões entre as cidades.
+        Por padrão, é definido como "Assets/mapa_padrao.json".
+    lista_de_nomes_de_cidades : list[str]
+        Uma lista contendo os nomes de todas as cidades presentes no mapa.
+    todas_as_cidades : dict[str, 'Cidade']
+        Um dicionário que mapeia o nome de cada cidade para sua instância correspondente da classe `Cidade`.
+        Por padrão, é um dicionário vazio.
+    """
     caminho_pro_json: str = "Assets/mapa_padrao.json"
     lista_de_nomes_de_cidades: list[str]
     todas_as_cidades: dict[str, 'Cidade'] = {}

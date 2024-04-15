@@ -3,15 +3,24 @@ from Controllers.Mapa import Mapa
 
 class Rota:
     """
-    A classe Rota armazena uma lista contendo o nome
-    de todas as cidades que foram percorridas do ponto
-    inicial até o final, além de toda a distância
-    percorrida até chegar lá.
+    A classe Rota armazena uma lista contendo o nome de todas as cidades que foram percorridas do ponto
+    inicial até o final, além de toda a distância percorrida até chegar lá.
 
-    De forma estática, armazena todas as rotas geradas
-    até o momento de execução da aplicação.
+    Atributos Públicos
+    ------------------
+    mapa_da_rota : 'Mapa'
+        O objeto `Mapa` que contém todas as informações sobre as cidades e suas conexões.
+    cidade_inicial : 'Cidade'
+        A cidade inicial da rota.
+    nome_da_cidade_final : str
+        O nome da cidade final da rota.
+    caminho : list[str]
+        Uma lista contendo o nome de todas as cidades percorridas na rota, do ponto inicial ao final.
+        O padrão é uma lista vazia.
+    distancia_percorrida : int
+        A distância total percorrida ao longo da rota, em quilômetros.
+        O padrão é 0.
     """
-
     mapa_da_rota: 'Mapa'
     cidade_inicial: 'Cidade'
     nome_da_cidade_final: str

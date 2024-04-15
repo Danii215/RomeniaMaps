@@ -1,143 +1,116 @@
-from tkinter import *
+from customtkinter import CTk, CTkButton, CTkEntry, CTkLabel, CTkFrame, set_appearance_mode, set_default_color_theme
+from Views.View import View
 
-class HomeView:
-    janela: 'Tk'
-    input_nome_da_cidade_inicial: 'Entry'
-    input_nome_da_cidade_final: 'Entry'
-    label_caminho_percorrido_resultado: 'Label'
+class Home(View):
+    """
+    A classe Home representa a interface gráfica da aplicação, que permite ao usuário interagir
+    para selecionar as cidades inicial e final para calcular uma rota.
+
+    Atributos Públicos
+    ------------------
+    nome_da_cidade_inicial : str
+        O nome da cidade inicial selecionada pelo usuário.
+    nome_da_cidade_final : str
+        O nome da cidade final selecionada pelo usuário.
+
+    Atributos Privados
+    ------------------
+    _janela : 'CTk'
+        A instância da classe `CTk` que representa a janela principal da interface gráfica.
+    _input_nome_da_cidade_inicial : 'CTkEntry'
+        O campo de entrada onde o usuário pode inserir o nome da cidade inicial.
+    _input_nome_da_cidade_final : 'CTkEntry'
+        O campo de entrada onde o usuário pode inserir o nome da cidade final.
+    _sidebar_lateral : 'CTkFrame'
+        O painel lateral onde estão localizados os elementos da interface, como rótulos e botões.
+    """
+    # Atributos Públicos
+    nome_da_cidade_inicial: str
+    nome_da_cidade_final: str
+    # Atributos Privados
+    _janela: 'CTk'
+    _input_nome_da_cidade_inicial: 'CTkEntry'
+    _input_nome_da_cidade_final: 'CTkEntry'
+    _sidebar_lateral: 'CTkFrame'
 
     def __init__(self):
-        self.janela = Tk()
+        """
+        Inicializa a aplicação e configura a interface gráfica.
+
+        Este método cria uma instância da classe `CTk` para a janela principal da aplicação e define sua aparência.
+        Em seguida, cria uma barra lateral esquerda na janela principal e adiciona diversos elementos de interface,
+        como rótulos de texto, campos de entrada e botão de ação. O botão permite ao usuário confirmar a seleção
+        das cidades inicial e final para calcular a rota. Por fim, renderiza a janela da interface gráfica.
+
+        Retorna
+        -------
+        None
+            Este método não retorna nada.
+        """
+        self._janela = CTk()
         self._definir_janela()
 
+        self._sidebar_lateral = self._criar_sidebar_lateral("left", "y", True)
+
         self._criar_label(
+            master=self._sidebar_lateral,
             texto_de_exibicao = "Escolha as cidades para criar rota:", 
-            cor_de_fundo_em_hex = "#306bac", 
             cor_do_texto = "white", 
-            fonte = "Arial, 30"
+            fonte = ("Arial", 20),
+            padx = (30, 30),
+            pady = (10, 10)
         )
 
         self._criar_label(
+            master=self._sidebar_lateral,
             texto_de_exibicao = "Cidade Inicial:", 
-            cor_de_fundo_em_hex = "#306bac", 
             cor_do_texto = "white", 
-            fonte = "Arial, 13"
+            fonte = ("Arial", 13),
+            padx = (10, 0),
+            anchor = "w"
         )
 
-        self.input_nome_da_cidade_inicial = self._criar_input_de_caixa_de_texto()
+        self._input_nome_da_cidade_inicial = self._criar_input_de_caixa_de_texto()
 
         self._criar_label(
+            master=self._sidebar_lateral,
             texto_de_exibicao = "Cidade Final:",
-            cor_de_fundo_em_hex = "#306bac",
             cor_do_texto = "white",
-            fonte = "Arial, 13",
-            pady = (10, 0)
+            fonte = ("Arial", 13),
+            pady = (10, 0),
+            padx = (10, 0),
+            anchor = "w"
         )
 
-        self.input_nome_da_cidade_final = self._criar_input_de_caixa_de_texto()
-
-        self._criar_label(
-            texto_de_exibicao = "Rota Gerada:",
-            cor_de_fundo_em_hex = "#306bac",
-            cor_do_texto = "white",
-            fonte = "Arial, 16",
-            pady = (10, 0)
-        )
-
-        self.label_caminho_percorrido_resultado = self._criar_label(
-            texto_de_exibicao = "",
-            cor_de_fundo_em_hex = "#3CB371",
-            width = 70,
-            pady = (0, 10)
-        )
+        self._input_nome_da_cidade_final = self._criar_input_de_caixa_de_texto()
 
         self._criar_botao(
-            self._action_calcular_rota,
+            self._sidebar_lateral,
+            self._action_definir_nomes_de_cidades,
             texto_de_exibicao = "Calcular rota",
-            cor_de_fundo_em_hex = "#3CB371",
             cor_do_texto = "white",
-            width = 10,
-            altura = 2,
-            pady = (15, 15)
+            altura = 32,
+            pady = (10, 0),
+            padx = (10, 10)
         )
 
         self._renderizar_janela()
 
     # Método privado
-    def _action_calcular_rota(self):
-        nome_da_cidade_inicial: str = (self.input_nome_da_cidade_inicial.get())
-        nome_da_cidade_final: str = (self.input_nome_da_cidade_final.get())
+    def _action_definir_nomes_de_cidades(self):
+        """
+        Obtém os nomes das cidades inicial e final inseridos nos campos de entrada da interface gráfica.
 
-        self.label_caminho_percorrido_resultado["text"] = f"O caminho de {nome_da_cidade_inicial} saindo de {nome_da_cidade_final} é:"
+        Este método é chamado quando o botão de confirmação é clicado. Ele recupera os nomes das cidades inicial
+        e final inseridos nos campos de entrada da interface gráfica e os armazena nos atributos correspondentes
+        da classe. Em seguida, fecha a janela da interface gráfica.
 
-    # Método privado
-    def _criar_botao(self,
-                      acao_ao_clicar: callable,
-                      texto_de_exibicao: str = "",
-                      cor_de_fundo_em_hex: str = "#3CB371",
-                      cor_do_texto: str = "white",
-                      width: int = 10,
-                      altura: int = 2,
-                      pady: tuple[int, int] = (0, 0)):
-        novo_botao: 'Button' = Button(
-            self.janela,
-            command = acao_ao_clicar,
-            text = texto_de_exibicao,
-            bg = cor_de_fundo_em_hex,
-            foreground = cor_do_texto,
-            width = width,
-            height = altura
-        )
+        Retorna
+        -------
+        None
+            Este método não retorna nada.
+        """
+        self.nome_da_cidade_inicial: str = self._input_nome_da_cidade_inicial.get()
+        self.nome_da_cidade_final: str = self._input_nome_da_cidade_final.get()
 
-        novo_botao.pack(anchor = "center", pady = pady)
-
-        return novo_botao
-
-    # Método privado
-    def _criar_label(self,
-                     texto_de_exibicao: str = "", 
-                     cor_de_fundo_em_hex: str = "#306bac", 
-                     cor_do_texto: str = "white", 
-                     fonte: str = "Arial",
-                     width: int = 100,
-                     pady: tuple[int, int] = (0, 0)) -> 'Label':
-        nova_label: 'Label' = Label(
-            self.janela,
-            text = texto_de_exibicao,
-            bg = cor_de_fundo_em_hex,
-            foreground = cor_do_texto,
-            font = fonte,
-            width = width
-        )
-
-        nova_label.pack(anchor = "center", pady = pady)
-
-        return nova_label
-    
-    # Método privado
-    def _criar_input_de_caixa_de_texto(self) -> 'Entry':
-        novo_input: 'Entry' = Entry(self.janela)
-        novo_input.pack(anchor = "center")
-
-        return novo_input
-
-    # Método privado
-    def _definir_janela(self):
-        self.janela.title("RomeniaMaps")
-        self.janela.geometry("993x960")
-        self.janela.configure(bg = "#306bac")
-        self._centralizar_janela()
-
-    # Método privado
-    def _centralizar_janela(self):
-        self.janela.update_idletasks()
-        x = (self.janela.winfo_screenwidth() - self.janela.winfo_width()) // 2
-        y = (self.janela.winfo_screenheight() - (60 - self.janela.winfo_height())) // 2
-        self.janela.geometry(f'{self.janela.winfo_width()}x{self.janela.winfo_height()}+{x}+{y}')
-
-    def _renderizar_janela(self):
-        self.janela.mainloop()
-
-    #foto_mapa = PhotoImage(file="Assets/grafo_resultado.png")
-    #mapa = Label(janela, image=foto_mapa)
-    #mapa.pack()
+        self._janela.quit()
