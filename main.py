@@ -5,8 +5,9 @@ from Views.HomeView import HomeView
 #Terminar de implementar a classe HomeView e trazer os inputs para o main, gerando a rota
 
 def main():
+    HomeView()
     mapa: 'Mapa' = Mapa()
-    
+
     nome_da_cidade_inicial: str = input("Insira a cidade inicial: ")
     nome_da_cidade_final: str = input("Insira a cidade final: ")
 
