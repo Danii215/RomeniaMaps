@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt
+from Models.Mapa import Mapa
 import networkx as nx
-from Controllers.Mapa import Mapa
+import matplotlib.pyplot as plt
 
 class Grafo:
     """
@@ -251,4 +251,4 @@ class Grafo:
         None
             Esta função não retorna nada.
         """
-        plt.savefig(f"Assets/{nome_do_arquivo}.png", dpi=300)
+        plt.savefig(f"Assets/Images/{nome_do_arquivo}.png", dpi=300)

@@ -1,6 +1,6 @@
-from Controllers.Mapa import Mapa
-from Controllers.Rota import Rota
-from Controllers.Grafo import Grafo
+from Models.Mapa import Mapa
+from Models.Rota import Rota
+from Models.Grafo import Grafo
 from Views.HomeView import Home
 
 def main():

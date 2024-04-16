@@ -1,5 +1,5 @@
-from customtkinter import CTk, CTkButton, CTkEntry, CTkLabel, CTkFrame, set_appearance_mode, set_default_color_theme
 from Views.View import View
+from customtkinter import CTk, CTkEntry, CTkFrame
 
 class Home(View):
     """
